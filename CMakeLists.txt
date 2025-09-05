@@ -8,7 +8,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# Try SFML 3 first (Homebrew default on macOS), then fall back to 2.x
+# Try SFML 3 first, then fall back to 2.x
 find_package(SFML 3 QUIET COMPONENTS Graphics Window System)
 if(SFML_FOUND)
   set(USE_SFML3 TRUE)
