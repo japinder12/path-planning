@@ -18,7 +18,8 @@ Build and run:
 mkdir build && cd build
 cmake ..
 cmake --build . -j
-./sandbox ../assets/maps/demo.png   # or no arg to use demo map
+./sandbox ../assets/maps/demo.png
+
 # Random rectangles map via CLI flags
 ./sandbox --random --size=120x80 --rects 24 --min 3 --max 10 --seed 1234
 ```
