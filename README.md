@@ -6,8 +6,8 @@ A desktop app where a "robot" plans with A* on a 2D occupancy grid and tracks th
 - A* on 2D occupancy grid (8-connected, Euclidean heuristic)
 - Chaikin path smoothing to produce a drivable polyline
 - Two controllers: Pure Pursuit and PID lateral
-- Live HUD (FPS, path length, plan time, lateral error, RMS)
-- CSV telemetry logging (pose, commands, errors, path length, plan time)
+- On-screen overlays: path, robot pose, lookahead target
+- CSV telemetry logging (pose, commands, lateral error, path length, plan time)
 - PNG map load/save and interactive obstacle editing
 
 ## Quick start
@@ -31,7 +31,7 @@ cmake --build . -j
 ./sandbox --random --size=120x80 --rects 24 --min 3 --max 10 --seed 1234
 ```
 
-Note: Place a TTF font at `assets/fonts/DejaVuSans.ttf` to enable HUD text (otherwise the app runs with a minimal HUD fallback). A demo map is optional; without an image the app generates a simple map procedurally.
+Note: A demo map is optional; without an image the app generates a simple map procedurally. Save the current map with `O` to `assets/maps/saved.png`.
 
 ## Controls
 - Mouse:
@@ -65,17 +65,9 @@ Examples:
 - `./sandbox -r --size=160x100 --rects 30 --min 2 --max 8 --seed 42`
 - `./sandbox --random --size 120x80 --rects 12`
 
-## Metrics / HUD
-- FPS (EMA-smoothed)
-- Path length (smoothed polyline, in cells)
-- Last replan time (ms for A* + smoothing)
-- Lookahead (Ld), target speed, smoothing iterations
-- Controller mode (Pure Pursuit or PID lateral)
-- Lateral error (signed) and RMS lateral error (running)
-- Footer hint summarizing controls
-
-What is the HUD?
-- A small semi-transparent overlay drawn in the window showing live metrics and control hints (top-left panel). It helps demonstrate performance (FPS, plan time), controller settings, and tracking quality (errors) during interaction.
+## Metrics
+- CSV columns: `t,x,y,theta,v,omega,err_lat,path_len,plan_ms`
+- Visual overlays: smoothed path polyline and lookahead target (toggle with `P`/`V`).
 
 ## CSV logging
 - File: `logs/run_YYYYMMDD_HHMMSS.csv`
@@ -93,10 +85,18 @@ What is the HUD?
 ## Portfolio GIF
 See `scripts/record_gif.md` for recording instructions.
 
+<!-- ## IDE Setup (VS Code)
+- Ensure a configure step generates `build/compile_commands.json`:
+  - `cmake -B build -S .`
+- Point IntelliSense to it (recommended):
+  - Settings: set `C_Cpp.default.compileCommands` to `build/compile_commands.json`, or enable the CMake Tools extension which provides configuration automatically.
+- If you still see `cannot open source file "SFML/Graphics.hpp"` in the editor, verify SFML is installed and add include fallbacks in your VS Code configuration (platform-dependent):
+  - macOS (Homebrew): `/opt/homebrew/include`, `/opt/homebrew/include/SFML` (Apple Silicon) or `/usr/local/include`, `/usr/local/include/SFML` (Intel)
+  - Windows (vcpkg): `C:/vcpkg/installed/x64-windows/include`
+  - Linux (apt): `/usr/include`, `/usr/include/SFML` -->
+
 ## Roadmap / stretch goals
-- Inflate obstacles by robot radius (grid dilation)
 - Bicycle vs. diff-drive model toggle (+ tuning)
-- Unit tests for A* on small maps
 - ROS2 wrapper (publish /map, /path, /cmd_vel)
 
 ## License
