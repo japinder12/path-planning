@@ -1,0 +1,41 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Build directories and files
+/build/
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+*.sln
+*.vcxproj*
+
+# Binaries / objects
+sandbox
+*.exe
+*.out
+*.o
+*.obj
+*.pdb
+*.dll
+*.so
+*.dylib
+
+# Logs and runtime artifacts
+logs/*.csv
+
+# Assets generated during sessions
+assets/maps/saved.png
+*.mp4
+*.mov
+
+# Local IDE/editor
+.vscode/
+.idea/
+
+# Fonts (user‑provided)
+assets/fonts/*.ttf
