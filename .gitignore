@@ -28,6 +28,7 @@ sandbox
 # Logs and runtime artifacts
 logs/*.csv
 
+
 # Assets generated during sessions
 assets/maps/saved.png
 *.mp4
