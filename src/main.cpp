@@ -87,19 +87,7 @@ int main(int argc, char** argv) {
 #endif
   window.setFramerateLimit(60);
 
-  // HUD font (optional)
-  sf::Font font;
-  bool fontOk = false;
-  if (std::filesystem::exists("assets/fonts/DejaVuSans.ttf")) {
-#if SFML_VERSION_MAJOR >= 3
-    fontOk = font.openFromFile("assets/fonts/DejaVuSans.ttf");
-#else
-    fontOk = font.loadFromFile("assets/fonts/DejaVuSans.ttf");
-#endif
-  }
-  if (!fontOk) {
-    std::cerr << "HUD font not found. Place 'assets/fonts/DejaVuSans.ttf' to enable HUD text.\n";
-  }
+  // HUD text removed: no font dependency
 
   // Sim state
   sf::Vector2i start{1, 1};
@@ -147,7 +135,7 @@ int main(int argc, char** argv) {
   sf::Clock clock;
   float accumulator = 0.f;
   bool paused = false;
-  float fpsEma = 60.f;
+  // fps EMA removed with HUD text
   double errSumSq = 0.0; long long errCount = 0;
 
   // Shapes for drawing
@@ -288,9 +276,7 @@ int main(int argc, char** argv) {
     // Update timing
     float frame = clock.restart().asSeconds();
     accumulator += frame;
-    float fps = (frame > 1e-6f) ? (1.f / frame) : 0.f;
-    // EMA smoothing for FPS
-    fpsEma = 0.9f * fpsEma + 0.1f * fps;
+    // FPS/HUD text removed
 
     // Physics steps
     int steps = 0;
@@ -367,41 +353,7 @@ int main(int argc, char** argv) {
     #endif
     window.draw(robotShape);
 
-    // HUD
-    if (fontOk) {
-      sf::RectangleShape panel({420.f, 130.f});
-      panel.setFillColor(sf::Color(0, 0, 0, 150));
-      panel.setPosition(sf::Vector2f{10.f, 10.f});
-      window.draw(panel);
-
-      auto hudLine = [&](const std::string& s, float y) {
-        sf::Text t(font); t.setCharacterSize(14); t.setFillColor(sf::Color::White);
-        t.setString(s); t.setPosition(sf::Vector2f{20.f, y}); window.draw(t);
-      };
-
-      std::ostringstream oss1;
-      oss1 << std::fixed << std::setprecision(1)
-           << "FPS: " << fpsEma
-           << " | Path len: " << astar::pathLength(smoothPath)
-           << " | Last replan: " << std::fixed << std::setprecision(1) << lastPlanMs << " ms";
-      hudLine(oss1.str(), 15.f);
-
-      std::ostringstream oss2;
-      double rms = (errCount > 0) ? std::sqrt(errSumSq / double(errCount)) : 0.0;
-      oss2 << std::fixed << std::setprecision(2)
-           << "Lookahead: " << ctrl.lookahead
-           << " | Speed: " << ctrl.targetSpeed
-           << " | Smooth: " << smoothingIters
-           << " | Ctrl: " << (usePID ? "PID" : "PurePursuit")
-           << " | Lat err: " << lateralError(state, smoothPath)
-           << " | RMS: " << rms;
-      hudLine(oss2.str(), 35.f);
-
-      sf::Text hint(font); hint.setCharacterSize(14); hint.setFillColor(sf::Color(200,200,200));
-      hint.setString("Mouse: L=start, Shift+L=toggle obs, RMB=goal | Keys: R, Space, [ / ] Ld, ;/' smooth, Up/Down speed, S/G set@mouse, C ctrl, P raw, V Ld, N/T random, 1/2/3 presets, O save map");
-      hint.setPosition(sf::Vector2f{20.f, 80.f});
-      window.draw(hint);
-    }
+    // HUD text removed; overlays (path, robot, lookahead) still drawn
 
     // Lookahead target render
     if (showLookahead && !smoothPath.empty()) {

@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Config.hpp>
-#include <SFML/Config.hpp>
 #include <cstdint>
 #include <string>
 #include <vector>
