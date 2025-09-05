@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <ctime>
 
 #include "a_star.hpp"
 #include "controller.hpp"

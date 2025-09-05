@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <algorithm>
 
 struct GridMap {
   int w = 0;
