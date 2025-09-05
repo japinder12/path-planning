@@ -2,6 +2,14 @@
 
 A desktop app where a "robot" plans with A* on a 2D occupancy grid and tracks the smoothed path using a Pure Pursuit controller. Visualized with SFML, with a HUD and CSV logging for metrics.
 
+## Features
+- A* on 2D occupancy grid (8-connected, Euclidean heuristic)
+- Chaikin path smoothing to produce a drivable polyline
+- Two controllers: Pure Pursuit and PID lateral
+- Live HUD (FPS, path length, plan time, lateral error, RMS)
+- CSV telemetry logging (pose, commands, errors, path length, plan time)
+- PNG map load/save and interactive obstacle editing
+
 ## Quick start
 
 Dependencies:
@@ -18,8 +26,7 @@ Build and run:
 mkdir build && cd build
 cmake ..
 cmake --build . -j
-./sandbox ../assets/maps/demo.png
-
+./sandbox ../assets/maps/demo.png   # or no arg to use demo map
 # Random rectangles map via CLI flags
 ./sandbox --random --size=120x80 --rects 24 --min 3 --max 10 --seed 1234
 ```
@@ -91,3 +98,6 @@ See `scripts/record_gif.md` for recording instructions.
 - Bicycle vs. diff-drive model toggle (+ tuning)
 - Unit tests for A* on small maps
 - ROS2 wrapper (publish /map, /path, /cmd_vel)
+
+## License
+This project is licensed under the MIT License
